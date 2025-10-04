@@ -18,21 +18,21 @@ const Player: React.FC = () => {
 
   // Lista expandida de comerciais em MP3
   const commercialUrls = [
-    'https://projetoradios.vercel.app/claroprezao.mp3',
-    'https://projetoradios.vercel.app/mercadolivre19reais.mp3',
-    'https://projetoradios.vercel.app/caixa.mp3',
-    'https://projetoradios.vercel.app/timblack.mp3',
-    'https://projetoradios.vercel.app/mercadolivre.mp3',
-    'https://projetoradios.vercel.app/vacina.mp3',
-    'https://projetoradios.vercel.app/trivago.mp3',
-    'https://projetoradios.vercel.app/pagbank.mp3',
-    'https://projetoradios.vercel.app/bradesco.mp3',
-    'https://projetoradios.vercel.app/claro.mp3',
-    'https://projetoradios.vercel.app/sky.mp3',
-    'https://projetoradios.vercel.app/itau.mp3',
-    'https://projetoradios.vercel.app/google.mp3',
-    'https://projetoradios.vercel.app/google2.mp3',
-    'https://projetoradios.vercel.app/google3.mp3'
+    'https://comerciais.netlify.app/claroprezao.mp3',
+    'https://comerciais.netlify.app/mercadolivre19reais.mp3',
+    'https://comerciais.netlify.app/caixa.mp3',
+    'https://comerciais.netlify.app/timblack.mp3',
+    'https://comerciais.netlify.app/mercadolivre.mp3',
+    'https://comerciais.netlify.app/vacina.mp3',
+    'https://comerciais.netlify.app/trivago.mp3',
+    'https://comerciais.netlify.app/pagbank.mp3',
+    'https://comerciais.netlify.app/bradesco.mp3',
+    'https://comerciais.netlify.app/claro.mp3',
+    'https://comerciais.netlify.app/sky.mp3',
+    'https://comerciais.netlify.app/itau.mp3',
+    'https://comerciais.netlify.app/google.mp3',
+    'https://comerciais.netlify.app/google2.mp3',
+    'https://comerciais.netlify.app/google3.mp3'
   ];
 
   const audioRef = useRef<HTMLAudioElement>(null);
