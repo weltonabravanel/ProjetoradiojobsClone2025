@@ -1,6 +1,6 @@
-     import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Radio, Heart, Globe, Headphones, TrendingUp, Star, Music, Zap, Users } from 'lucide-react';
+import { Radio, Heart, Globe, Headphones, TrendingUp, Star, Music } from 'lucide-react';
 import StationList from '../components/StationList';
 import { useRadio } from '../contexts/RadioContext';
 import { fetchStations } from '../services/api';
@@ -28,7 +28,6 @@ const HomePage: React.FC = () => {
     const getFromCache = (key: string) => {
       const cached = localStorage.getItem(key);
       if (!cached) return null;
-
       const parsed = JSON.parse(cached);
       const isValid = Date.now() - parsed.timestamp < CACHE_TTL;
       return isValid ? parsed.data : null;
@@ -86,13 +85,6 @@ const HomePage: React.FC = () => {
     <div className="space-y-20">
       {/* Stories de Rádios Famosas */}
       <section className="animate-slide-up">
-        <div className="glass-card p-6 mb-8">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
-            <Star className="mr-3 text-yellow-500" />
-            Rádios em Destaque
-          </h2>
-        </div>
-        
         <div className="flex gap-6 overflow-x-auto scrollbar-hide pb-4">
           {[
             { name: 'Jovem Pan', logo: 'https://upload.wikimedia.org/wikipedia/commons/a/a5/Jovem_Pan_FM_logo_2018_%282%29.png', url: 'https://jovempan.com.br' },
