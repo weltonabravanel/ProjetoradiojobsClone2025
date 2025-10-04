@@ -1,4 +1,4 @@
-      import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Radio, Heart, Globe, Headphones, TrendingUp, Star, Music, Zap, Users } from 'lucide-react';
 import StationList from '../components/StationList';
@@ -142,7 +142,7 @@ const HomePage: React.FC = () => {
           pagination={{ clickable: true }}
           autoplay={{ delay: 5000 }}
           loop={true}
-          className="h-[220px] sm:h-[400px] md:h-[500px] w-full"
+          className="h-[220px] sm:h-[400px] md:h-[500px] "
         >
           {[
             {
