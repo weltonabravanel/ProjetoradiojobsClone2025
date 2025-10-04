@@ -173,13 +173,6 @@ const HomePage: React.FC = () => {
         text: "Quer ganhar um Alexa n liberdade FM.",
       },
       {
-        href: "https://www.radioliberdade.com.br/",
-        img: "https://radioliberdade.com.br/imagens/upload/destaquehome/1200x400-679107f1ee01e-1737558001.jpg",
-        alt: "Música sertaneja",
-        title: "🤠 Promoção Alexa",
-        text: "Quer ganhar um Alexa n liberdade FM.",
-      },
-      {
         href: "https://radioliberdade.com.br/",
         img: "https://radioliberdade.com.br/imagens/upload/destaquehome/1200x400-6749fa9bdbac2-1732901531.png",
         alt: "Música e tecnologia",
