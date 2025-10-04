@@ -135,7 +135,6 @@ const HomePage: React.FC = () => {
         </div>
       </section>
   {/* Banner Hero Responsivo */}
-      <section className="w-full max-w-[1515px] mx-auto relative rounded-3xl overflow-hidden shadow-xl text-white aspect-video">
         <Swiper
           modules={[Navigation, Pagination, Autoplay]}
           navigation
