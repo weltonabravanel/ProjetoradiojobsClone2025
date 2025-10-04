@@ -176,7 +176,7 @@ const HomePage: React.FC = () => {
         href: "https://radioliberdade.com.br/",
         img: "https://radioliberdade.com.br/imagens/upload/destaquehome/1200x400-6749fa9bdbac2-1732901531.png",
         alt: "Música e tecnologia",
-        title: "Escute a Rádio Sertaneja do Brasil",
+        title: "📻 Escute a Rádio Sertaneja do Brasil",
         text: "Uma mistura de músicas sertanejas Brasileiras ",
       },
     ].map((slide, index) => (
