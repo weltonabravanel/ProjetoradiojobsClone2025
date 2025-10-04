@@ -143,7 +143,7 @@ const HomePage: React.FC = () => {
           pagination={{ clickable: true }}
           autoplay={{ delay: 5000 }}
           loop={true}
-          className="h-[600%] md:h-[100%] w-full"
+          className="h-[100%] md:h-[100%] w-full"
         >
           {[
             {
