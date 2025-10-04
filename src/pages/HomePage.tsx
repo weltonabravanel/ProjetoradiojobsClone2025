@@ -135,75 +135,72 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-     {/* Hero Carousel */}
-<section className="w-full max-w-7xl mx-auto relative rounded-3xl overflow-hidden shadow-2xl animate-slide-up">
-  <div className="relative w-full aspect-video"> 
-    <Swiper
-      modules={[Navigation, Pagination, Autoplay]}
-      navigation
-      pagination={{ clickable: true }}
-      autoplay={{ delay: 5000 }}
-      loop={true}
-      className="w-full h-full"
-    >
-      {[
-        {
-          href: "https://radiojobs.com.br",
-          img: "https://i0.wp.com/radio98fm.com/wp-content/uploads/2024/11/banner-site-98FM-1.png?fit=1920%2C560&ssl=1",
-          alt: "Rádio antiga",
-          title: "🎵 Sintonize Emoções",
-          text: "Cada estação é uma porta para novas descobertas. Explore músicas, histórias e culturas que atravessam o tempo e o país.",
-        },
-        {
-          href: "https://radiojobs.com.br",
-          img: "https://97fmnatal.com.br/images/vitrine.png",
-          alt: "Estúdio de rádio",
-          title: "📻 Rádio É Companhia",
-          text: "De manhã à noite, a rádio acompanha sua rotina com trilhas sonoras que embalam momentos únicos da sua vida.",
-        },
-        {
-          href: "https://radioliberdade.com.br/",
-          img: "https://radioliberdade.com.br/imagens/upload/destaquehome/1200x400-6749fa9bdbac2-1732901531.png",
-          alt: "Música sertaneja",
-          title: "🤠 Sertanejo Raiz",
-          text: "O melhor do sertanejo brasileiro, das raízes aos sucessos atuais. Música que toca o coração.",
-        },
-      ].map((slide, index) => (
-        <SwiperSlide key={index}>
-          <a
-            href={slide.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block relative w-full h-full group"
-          >
-            {/* Imagem */}
-            <img
-              src={slide.img}
-              alt={slide.alt}
-              className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-            />
-            {/* Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
-            {/* Conteúdo */}
-            <div className="relative z-10 p-8 md:p-12 flex flex-col justify-center h-full max-w-2xl">
-              <h2 className="text-3xl md:text-5xl font-black text-white drop-shadow-2xl mb-4 group-hover:scale-105 transition-transform duration-300">
-                {slide.title}
-              </h2>
-              <p className="text-lg md:text-xl text-white/90 drop-shadow-lg leading-relaxed">
-                {slide.text}
-              </p>
-              <div className="mt-6">
-                <span className="inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur-sm rounded-2xl text-white font-semibold hover:bg-white/30 transition-all duration-300">
-                  Explorar →
-                </span>
-              </div>
-            </div>
-          </a>
-        </SwiperSlide>
-      ))}
-    </Swiper>
-  </div>
-</section>
+  {/* Hero Carousel */}
+      <section className="w-full max-w-7xl mx-auto relative rounded-3xl overflow-hidden shadow-2xl animate-slide-up">
+        <Swiper
+          modules={[Navigation, Pagination, Autoplay]}
+          navigation
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 5000 }}
+          loop={true}
+          className="h-[400px] md:h-[500px] w-full"
+        >
+          {[
+            {
+              href: "https://radiojobs.com.br",
+              img: "https://i0.wp.com/radio98fm.com/wp-content/uploads/2024/11/banner-site-98FM-1.png?fit=1920%2C560&ssl=1",
+              alt: "Rádio antiga",
+              title: "🎵 Sintonize Emoções",
+              text: "Cada estação é uma porta para novas descobertas. Explore músicas, histórias e culturas que atravessam o tempo e o país.",
+            },
+            {
+              href: "https://radiojobs.com.br",
+              img: "https://97fmnatal.com.br/images/vitrine.png",
+              alt: "Estúdio de rádio",
+              title: "📻 Rádio É Companhia",
+              text: "De manhã à noite, a rádio acompanha sua rotina com trilhas sonoras que embalam momentos únicos da sua vida.",
+            },
+            {
+              href: "https://radioliberdade.com.br/",
+              img: "https://radioliberdade.com.br/imagens/upload/destaquehome/1200x400-6749fa9bdbac2-1732901531.png",
+              alt: "Música sertaneja",
+              title: "🤠 Sertanejo Raiz",
+              text: "O melhor do sertanejo brasileiro, das raízes aos sucessos atuais. Música que toca o coração.",
+            },
+          ].map((slide, index) => (
+            <SwiperSlide key={index}>
+              <a
+                href={slide.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block relative h-full w-full group"
+              >
+                <img
+                  src={slide.img}
+                  alt={slide.alt}
+                  className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
+                <div className="relative z-10 p-8 md:p-12 flex flex-col justify-center h-full max-w-2xl">
+                  <h2 className="text-3xl md:text-5xl font-black text-white drop-shadow-2xl mb-4 group-hover:scale-105 transition-transform duration-300">
+                    {slide.title}
+                  </h2>
+                  <p className="text-lg md:text-xl text-white/90 drop-shadow-lg leading-relaxed">
+                    {slide.text}
+                  </p>
+                  <div className="mt-6">
+                    <span className="inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur-sm rounded-2xl text-white font-semibold hover:bg-white/30 transition-all duration-300">
+                      Explorar →
+                    </span>
+                  </div>
+                </div>
+              </a>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </section>
+
+
 
 
       {/* Funcionalidades */}
