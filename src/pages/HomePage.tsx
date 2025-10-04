@@ -167,13 +167,6 @@ const HomePage: React.FC = () => {
       },
       {
         href: "https://www.radioliberdade.com.br/",
-        img: "https://radioliberdade.com.br/imagens/upload/destaquehome/1200x400-679137a3e2a9b-1737570211.jpg",
-        alt: "Música sertaneja",
-        title: "🤠 Promoções Vigentes",
-        text: "Participe das promoções da Liberdade FM.",
-      },
-     {
-        href: "https://www.radioliberdade.com.br/",
         img: "https://radioliberdade.com.br/imagens/upload/destaquehome/1200x400-679107f1ee01e-1737558001.jpg",
         alt: "Música sertaneja",
         title: "🤠 Promoção Alexa",
