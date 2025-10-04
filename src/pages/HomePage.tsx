@@ -148,8 +148,8 @@ const HomePage: React.FC = () => {
         href: "https://apple.com.br",
         img: "https://thinkmarketingmagazine.com/wp-content/uploads/2013/06/steve-jobs.jpg",
         alt: "Estúdio de rádio",
-        title: "📻 Rádio É Companhia",
-        text: "De manhã à noite, a rádio acompanha sua rotina com trilhas sonoras que embalam momentos únicos da sua vida.",
+        title: "📻 Site em Homenagem a Steve Jobs",
+        text: "A única maneira de fazer um trabalho excelente é amar o que você faz.",
       },
       {
         href: "https://radioliberdade.com.br/",
