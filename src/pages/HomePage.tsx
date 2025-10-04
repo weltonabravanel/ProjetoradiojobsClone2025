@@ -136,7 +136,7 @@ const HomePage: React.FC = () => {
       </section>
 {/* Hero Carousel */}
    {/* Hero Carousel */}
-      <section className="w-full max-w-7xl mx-auto relative rounded-3xl overflow-hidden shadow-2xl animate-slide-up">
+      <section className="w-full max-w-[1515px] mx-auto relative rounded-3xl overflow-hidden shadow-xl text-white aspect-[16/7] sm:aspect-[16/6] md:aspect-[16/5]">
         <Swiper
           modules={[Navigation, Pagination, Autoplay]}
           navigation
