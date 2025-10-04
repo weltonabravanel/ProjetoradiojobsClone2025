@@ -152,8 +152,8 @@ const HomePage: React.FC = () => {
         text: "A única maneira de fazer um trabalho excelente é amar o que você faz.",
       },
       {
-        href: "https://radioliberdade.com.br/",
-        img: "https://radioliberdade.com.br/imagens/upload/destaquehome/1200x400-6749fa9bdbac2-1732901531.png",
+        href: "https://otimafm.com.br/",
+        img: "https://otimafm.com.br/uploads/banner/IBOPEBANNER_1695757570.jpg",
         alt: "Música sertaneja",
         title: "🤠 Sertanejo Raiz",
         text: "O melhor do sertanejo brasileiro, das raízes aos sucessos atuais. Música que toca o coração.",
