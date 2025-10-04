@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+     import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Radio, Heart, Globe, Headphones, TrendingUp, Star, Music, Zap, Users } from 'lucide-react';
 import StationList from '../components/StationList';
@@ -134,14 +134,16 @@ const HomePage: React.FC = () => {
           ))}
         </div>
       </section>
-  {/* Banner Hero Responsivo */}
+{/* Hero Carousel */}
+   {/* Hero Carousel */}
+      <section className="w-full max-w-[1515px] mx-auto relative rounded-3xl overflow-hidden shadow-xl text-white aspect-[16/7] sm:aspect-[16/6] md:aspect-[16/5]">
         <Swiper
           modules={[Navigation, Pagination, Autoplay]}
           navigation
           pagination={{ clickable: true }}
           autoplay={{ delay: 5000 }}
           loop={true}
-          className="h-[220px] sm:h-[400px] md:h-[500px] w-full"
+          className="h-[400px] md:h-[500px] w-full"
         >
           {[
             {
@@ -179,15 +181,15 @@ const HomePage: React.FC = () => {
                   className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
-                <div className="relative z-10 p-6 sm:p-10 flex flex-col justify-center h-full max-w-2xl">
-                  <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white drop-shadow-2xl mb-3 sm:mb-4 group-hover:scale-105 transition-transform duration-300">
+                <div className="relative z-10 p-8 md:p-12 flex flex-col justify-center h-full max-w-2xl">
+                  <h2 className="text-3xl md:text-5xl font-black text-white drop-shadow-2xl mb-4 group-hover:scale-105 transition-transform duration-300">
                     {slide.title}
                   </h2>
-                  <p className="text-sm sm:text-lg md:text-xl text-white/90 drop-shadow-lg leading-relaxed">
+                  <p className="text-lg md:text-xl text-white/90 drop-shadow-lg leading-relaxed">
                     {slide.text}
                   </p>
-                  <div className="mt-4 sm:mt-6">
-                    <span className="inline-flex items-center px-4 py-2 sm:px-6 sm:py-3 bg-white/20 backdrop-blur-sm rounded-2xl text-white font-semibold hover:bg-white/30 transition-all duration-300">
+                  <div className="mt-6">
+                    <span className="inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur-sm rounded-2xl text-white font-semibold hover:bg-white/30 transition-all duration-300">
                       Explorar →
                     </span>
                   </div>
