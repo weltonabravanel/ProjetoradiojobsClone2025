@@ -145,8 +145,8 @@ const HomePage: React.FC = () => {
         text: "Cada estação é uma porta para novas descobertas. Explore músicas, histórias e culturas que atravessam o tempo e o país.",
       },
       {
-        href: "https://radiojobs.com.br",
-        img: "https://97fmnatal.com.br/images/vitrine.png",
+        href: "https://apple.com.br",
+        img: "https://thinkmarketingmagazine.com/wp-content/uploads/2013/06/steve-jobs.jpg",
         alt: "Estúdio de rádio",
         title: "📻 Rádio É Companhia",
         text: "De manhã à noite, a rádio acompanha sua rotina com trilhas sonoras que embalam momentos únicos da sua vida.",
