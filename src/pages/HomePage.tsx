@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'; 
+      import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Radio, Heart, Globe, Headphones, TrendingUp, Star, Music } from 'lucide-react';
+import { Radio, Heart, Globe, Headphones, TrendingUp, Star, Music, Zap, Users } from 'lucide-react';
 import StationList from '../components/StationList';
 import { useRadio } from '../contexts/RadioContext';
 import { fetchStations } from '../services/api';
@@ -84,7 +84,58 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="space-y-20">
-      {/* Hero Carousel */}
+      {/* Stories de Rádios Famosas */}
+      <section className="animate-slide-up">
+        <div className="glass-card p-6 mb-8">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+            <Star className="mr-3 text-yellow-500" />
+            Rádios em Destaque
+          </h2>
+        </div>
+        
+        <div className="flex gap-6 overflow-x-auto scrollbar-hide pb-4">
+          {[
+            { name: 'Jovem Pan', logo: 'https://upload.wikimedia.org/wikipedia/commons/a/a5/Jovem_Pan_FM_logo_2018_%282%29.png', url: 'https://jovempan.com.br' },
+            { name: 'CBN', logo: 'https://s3.glbimg.com/v1/AUTH_3ec28e89a5754c7b937cbc7ade6b1ace/assets/common/cbn-1024x1024.svg', url: 'https://cbn.globoradio.globo.com' },
+            { name: 'BandNews', logo: 'https://img.band.com.br/image/2025/03/28/lofo-ao-vivo-bandnews-91316_300x300.png', url: 'https://bandnewsfm.band.uol.com.br' },
+            { name: 'Antena 1', logo: 'https://img.radios.com.br/radio/xl/radio9505_1574106966.jpg', url: 'https://antena1.com.br' },
+            { name: 'Transamérica', logo: 'https://upload.wikimedia.org/wikipedia/commons/3/32/Rede_Transam%C3%A9rica_logo.png', url: 'https://transamerica.com.br' },
+            { name: 'Massa FM', logo: 'https://radioamantes.com/wp-content/uploads/2019/09/massa-fm.jpg', url: 'https://massafm.com.br' },
+            { name: 'Rádio Globo', logo: 'https://img.radios.com.br/radio/xl/radio72023_1702994214.jpeg', url: 'https://kiisfm.iheart.com/' },
+            { name: 'Rádio Globo', logo: 'https://thumbnail.anii.io/br/radio-globo-98-1-fm-rio-de-janeiro-brazil.webp', url: 'https://radioglobo.globo.com' },
+            { name: 'Rádio Globo', logo: 'https://static.mytuner.mobi/media/radios-150px/698/89-fm-a-radio-rock.a64f6d05.png', url: 'https://www.radiorock.com.br/' },
+            { name: 'Kiss FM', logo: 'https://kissfm.com.br/wp-content/uploads/2024/08/Madrugada_Kiss.png', url: 'https://kissfm.com.br' },
+            { name: 'Band FM', logo: 'https://upload.wikimedia.org/wikipedia/pt/1/1f/Logotipo_da_BandNews_FM.png', url: 'https://bandfm.band.uol.com.br' },
+            { name: 'Clube FM', logo: 'https://yt3.googleusercontent.com/gAgCvOpnliRNhl7zfEVESJTnHt6ucQjxJDG7R-OAE78R6wz1IGbTEiln6gp4HpBdVU1S8EIAduc=s900-c-k-c0x00ffffff-no-rj', url: 'https://clubefm.com.br' },
+          ].map((station, idx) => (
+            <a
+              key={idx}
+              href={station.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col items-center cursor-pointer hover:scale-110 transition-all duration-300 group min-w-[100px]"
+            >
+              <div className="relative">
+                <div className="w-20 h-20 rounded-full border-4 border-gradient-to-r from-yellow-400 to-orange-400 overflow-hidden shadow-xl group-hover:shadow-2xl transition-all duration-300">
+                  <img
+                    src={station.logo}
+                    alt={station.name}
+                    className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-300"
+                  />
+                </div>
+                <div className="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-r from-red-500 to-pink-500 rounded-full flex items-center justify-center">
+                  <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                </div>
+              </div>
+              <span className="text-sm font-semibold text-gray-700 mt-3 text-center max-w-[90px] truncate group-hover:text-blue-600 transition-colors duration-300">
+                {station.name}
+              </span>
+            </a>
+          ))}
+        </div>
+      </section>
+{/* Hero Carousel */}
+   {/* Hero Carousel */}
       <section className="w-full max-w-[1515px] mx-auto relative rounded-3xl overflow-hidden shadow-xl text-white aspect-[16/7] sm:aspect-[16/6] md:aspect-[16/5]">
         <Swiper
           modules={[Navigation, Pagination, Autoplay]}
@@ -148,6 +199,11 @@ const HomePage: React.FC = () => {
           ))}
         </Swiper>
       </section>
+
+
+
+
+
 
       {/* Funcionalidades */}
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 animate-slide-up">
