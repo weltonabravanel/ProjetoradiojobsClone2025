@@ -135,71 +135,71 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 {/* Hero Carousel */}
-  {/* HERO BRASILEIRO */}
- 
-  <section className="w-full max-w-[1515px] mx-auto relative rounded-3xl overflow-hidden shadow-xl text-white aspect-[16/7] sm:aspect-[16/6] md:aspect-[16/5]">
-
-  <Swiper
-    modules={[Navigation, Pagination, Autoplay]}
-    navigation
-    pagination={{ clickable: true }}
-    autoplay={{ delay: 5000 }}
-    loop={true}
-    className="h-full w-full"
-  >
-    {[
-      {
-        href: "https://radiojobs.com.br",
-        img: "https://97fmnatal.com.br/images/vitrine.png",
-        alt: "Rádio antiga",
-        title: "Sintonize Emoções",
-        text: "Cada estação é uma porta para novas descobertas. Explore músicas, histórias e culturas que atravessam o tempo e o país.",
-      },
-       {
-        href: "https://www.sistemavintage.com/",
-        img: "https://projetoradios.vercel.app/vintagebanner.png",
-        alt: "Banner vintage",
-        title: "Vintage no Ar",
-        text: "Uma viagem sonora ao passado com estilo, charme e personalidade. Redescubra os clássicos que marcaram época.",
-      },
-      {
-        href: "https://radioliberdade.com.br/",
-        img: "https://radioliberdade.com.br/imagens/upload/destaquehome/1200x400-6749fa9bdbac2-1732901531.png",
-        alt: "Música e tecnologia",
-        title: "Escute a Rádio Sertaneja do Brasil",
-        text: "Uma mistura de músicas sertanejas Brasileiras ",
-      },
-      {
-        href: "https://apple.com.br",
-        img: "https://thinkmarketingmagazine.com/wp-content/uploads/2013/06/steve-jobs.jpg",
-        alt: "Música e tecnologia",
-        title: "Onde a Tradição Encontra o Futuro",
-        text: "A rádio brasileira se reinventa com tecnologia, mantendo viva a conexão entre voz, música e sentimento.",
-      },
-    ].map((slide, index) => (
-      <SwiperSlide key={index}>
-        <a
-          href={slide.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block relative h-full w-full"
+   {/* Hero Carousel */}
+      <section className="w-full max-w-7xl mx-auto relative rounded-3xl overflow-hidden shadow-2xl animate-slide-up">
+        <Swiper
+          modules={[Navigation, Pagination, Autoplay]}
+          navigation
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 5000 }}
+          loop={true}
+          className="h-[400px] md:h-[500px] w-full"
         >
-          <img
-            src={slide.img}
-            alt={slide.alt}
-            className="absolute inset-0 w-full h-full object-cover object-center"
-          />
-          <div className="relative z-10 px-6 py-10 sm:px-8 sm:py-12 md:p-12 flex flex-col justify-center h-full bg-black/50">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold drop-shadow-xl">{slide.title}</h2>
-            <p className="mt-4 text-base sm:text-lg md:text-xl max-w-xl text-white/90 drop-shadow-md">
-              {slide.text}
-            </p>
-          </div>
-        </a>
-      </SwiperSlide>
-    ))}
-  </Swiper>
-</section>
+          {[
+            {
+              href: "https://radiojobs.com.br",
+              img: "https://i0.wp.com/radio98fm.com/wp-content/uploads/2024/11/banner-site-98FM-1.png?fit=1920%2C560&ssl=1",
+              alt: "Rádio antiga",
+              title: "🎵 Sintonize Emoções",
+              text: "Cada estação é uma porta para novas descobertas. Explore músicas, histórias e culturas que atravessam o tempo e o país.",
+            },
+            {
+              href: "https://radiojobs.com.br",
+              img: "https://97fmnatal.com.br/images/vitrine.png",
+              alt: "Estúdio de rádio",
+              title: "📻 Rádio É Companhia",
+              text: "De manhã à noite, a rádio acompanha sua rotina com trilhas sonoras que embalam momentos únicos da sua vida.",
+            },
+            {
+              href: "https://radioliberdade.com.br/",
+              img: "https://radioliberdade.com.br/imagens/upload/destaquehome/1200x400-6749fa9bdbac2-1732901531.png",
+              alt: "Música sertaneja",
+              title: "🤠 Sertanejo Raiz",
+              text: "O melhor do sertanejo brasileiro, das raízes aos sucessos atuais. Música que toca o coração.",
+            },
+          ].map((slide, index) => (
+            <SwiperSlide key={index}>
+              <a
+                href={slide.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block relative h-full w-full group"
+              >
+                <img
+                  src={slide.img}
+                  alt={slide.alt}
+                  className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
+                <div className="relative z-10 p-8 md:p-12 flex flex-col justify-center h-full max-w-2xl">
+                  <h2 className="text-3xl md:text-5xl font-black text-white drop-shadow-2xl mb-4 group-hover:scale-105 transition-transform duration-300">
+                    {slide.title}
+                  </h2>
+                  <p className="text-lg md:text-xl text-white/90 drop-shadow-lg leading-relaxed">
+                    {slide.text}
+                  </p>
+                  <div className="mt-6">
+                    <span className="inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur-sm rounded-2xl text-white font-semibold hover:bg-white/30 transition-all duration-300">
+                      Explorar →
+                    </span>
+                  </div>
+                </div>
+              </a>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </section>
+
 
 
 
