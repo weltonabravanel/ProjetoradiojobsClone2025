@@ -83,12 +83,7 @@ const HomePage: React.FC = () => {
   }, []);
 
   return (
-    <div className="space-y-20">
-      {/* Stories de Rádios Famosas */}
-      <section className="animate-slide-up">
-        <div className="glass-card p-6 mb-8">
-                 </div>
-        
+          
         <div className="flex gap-6 overflow-x-auto scrollbar-hide pb-4">
           {[
             { name: 'Jovem Pan', logo: 'https://upload.wikimedia.org/wikipedia/commons/a/a5/Jovem_Pan_FM_logo_2018_%282%29.png', url: 'https://jovempan.com.br' },
