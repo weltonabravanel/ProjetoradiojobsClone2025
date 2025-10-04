@@ -158,6 +158,27 @@ const HomePage: React.FC = () => {
         title: "🤠 Sertanejo Raiz",
         text: "O melhor do sertanejo brasileiro, das raízes aos sucessos atuais. Música que toca o coração.",
       },
+     {
+        href: "https://www.radioliberdade.com.br/",
+        img: "https://radioliberdade.com.br/imagens/upload/destaquehome/1200x400-679137a3e2a9b-1737570211.jpg",
+        alt: "Música sertaneja",
+        title: "🤠 Sertanejo Raiz",
+        text: "O melhor do sertanejo brasileiro, das raízes aos sucessos atuais. Música que toca o coração.",
+      },
+      {
+        href: "https://www.radioliberdade.com.br/",
+        img: "https://radioliberdade.com.br/imagens/upload/destaquehome/1200x400-679137a3e2a9b-1737570211.jpg",
+        alt: "Música sertaneja",
+        title: "🤠 Promoções Vigentes",
+        text: "Participe das promoções da Liberdade FM.",
+      },
+     {
+        href: "https://www.radioliberdade.com.br/",
+        img: "https://radioliberdade.com.br/imagens/upload/destaquehome/1200x400-679107f1ee01e-1737558001.jpg",
+        alt: "Música sertaneja",
+        title: "🤠 Promoção Alexa",
+        text: "Quer ganhar um Alexa n liberdade FM.",
+      },
     ].map((slide, index) => (
       <SwiperSlide key={index}>
         <a
