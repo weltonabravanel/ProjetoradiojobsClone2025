@@ -261,9 +261,6 @@ const SearchPage: React.FC<SearchPageProps> = ({
                   className="bg-white/10 border border-white/20 rounded-lg px-3 py-1 text-white text-sm focus:outline-none focus:border-green-500"
                 >
                   <option value={25}>25 músicas</option>
-                  <option value={50}>50 músicas</option>
-                  <option value={100}>100 músicas</option>
-                  <option value={200}>200 músicas</option>
                   <option value={totalResults}>Todas ({totalResults})</option>
                 </select>
               </div>
