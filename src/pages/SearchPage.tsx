@@ -38,15 +38,15 @@ interface SongRowProps {
 
 // Componente isolado para a linha, crucial para a performance da virtualização
 const SongRow: React.FC<SongRowProps> = React.memo(({ index, style, data }) => {
-  const { 
-    displayedResults, 
-    currentSong, 
-    isFavorite, 
-    onPlaySong, 
+  const {
+    displayedResults,
+    currentSong,
+    isFavorite,
+    onPlaySong,
     onToggleFavorite,
     searchResults
   } = data;
-  
+
   const song = displayedResults[index];
   if (!song) return null; // Prevenção de erro
 
@@ -91,7 +91,9 @@ const SearchPage: React.FC<SearchPageProps> = ({
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('list');
   const [sortBy, setSortBy] = useState<'relevance' | 'name' | 'artist' | 'duration'>('relevance');
   const [showFilters, setShowFilters] = useState(false);
-  const [gridDisplayCount, setGridDisplayCount] = useState(50); // Mantido apenas para o modo 'grid'
+  
+  // 🎯 MUDANÇA AQUI: Definição do valor inicial como 25 para o modo 'grid'
+  const [gridDisplayCount, setGridDisplayCount] = useState(25); // Valor inicial: 25
 
   const playAllResults = useCallback(() => {
     if (searchResults.length > 0) {
@@ -102,14 +104,14 @@ const SearchPage: React.FC<SearchPageProps> = ({
   // Otimização: Uso de useMemo para resultados ordenados
   const sortedResults = useMemo(() => {
     let sorted = [...searchResults];
-    
+
     switch (sortBy) {
       case 'name':
         sorted.sort((a, b) => a.name.localeCompare(b.name));
         break;
       case 'artist':
         // Acesso seguro ao primeiro artista
-        sorted.sort((a, b) => 
+        sorted.sort((a, b) =>
           a.artists.primary[0]?.name.localeCompare(b.artists.primary[0]?.name || '') || 0
         );
         break;
@@ -121,7 +123,7 @@ const SearchPage: React.FC<SearchPageProps> = ({
         // Se precisar de ordenação frontend para relevância, implemente aqui.
         break;
     }
-    
+
     // Otimização: Garantir que a lista retornada seja estável se o sortBy não mudar.
     // Retorna a lista original se não houve ordenação para evitar re-render desnecessário.
     return sorted;
@@ -129,14 +131,14 @@ const SearchPage: React.FC<SearchPageProps> = ({
 
 
   // Resultados exibidos: Todos (para lista virtualizada) ou fatiados (para grid com "Carregar Mais")
-  const displayedResults = viewMode === 'list' 
-    ? sortedResults 
+  const displayedResults = viewMode === 'list'
+    ? sortedResults
     : sortedResults.slice(0, gridDisplayCount);
 
   const loadMore = useCallback(() => {
-    setGridDisplayCount(prev => Math.min(prev + 25, searchResults.length));
+    setGridDisplayCount(prev => Math.min(prev + 50, searchResults.length));
   }, [searchResults.length]);
-  
+
   const totalResults = sortedResults.length;
   const itemsInView = viewMode === 'list' ? totalResults : displayedResults.length;
 
@@ -166,7 +168,7 @@ const SearchPage: React.FC<SearchPageProps> = ({
 
   return (
     <div className="space-y-6">
-      
+
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div>
@@ -184,7 +186,7 @@ const SearchPage: React.FC<SearchPageProps> = ({
             )}
           </p>
         </div>
-        
+
         <div className="flex items-center gap-3">
           {/* View Mode Toggle */}
           <div className="flex items-center bg-white/10 rounded-lg p-1">
@@ -220,7 +222,7 @@ const SearchPage: React.FC<SearchPageProps> = ({
 
           {/* Play All Button */}
           {totalResults > 0 && (
-            <button 
+            <button
               onClick={playAllResults}
               className="flex items-center gap-2 bg-green-600 hover:bg-green-700 px-4 py-2 rounded-xl font-medium transition-all duration-200 hover:scale-105"
             >
@@ -248,7 +250,7 @@ const SearchPage: React.FC<SearchPageProps> = ({
                 <option value="duration">Duração</option>
               </select>
             </div>
-            
+
             {/* O "Exibir" agora só é relevante para o modo 'grid' */}
             {viewMode === 'grid' && (
               <div className="flex items-center gap-2">
@@ -292,7 +294,7 @@ const SearchPage: React.FC<SearchPageProps> = ({
         <>
           {viewMode === 'list' ? (
             // APLICAÇÃO DA VIRTUALIZAÇÃO PARA O MODO LISTA
-            <div className="h-[60vh] max-h-[800px]"> 
+            <div className="h-[60vh] max-h-[800px]">
               <FixedSizeList
                 height={window.innerHeight * 0.6} // 60% da altura da tela como altura de visualização
                 itemCount={totalResults}
@@ -333,7 +335,7 @@ const SearchPage: React.FC<SearchPageProps> = ({
               </button>
             </div>
           )}
-          
+
           {/* Results Summary */}
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
             <h3 className="text-lg font-semibold text-white mb-3">📊 Resumo dos Resultados</h3>
