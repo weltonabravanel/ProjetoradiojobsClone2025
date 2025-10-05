@@ -105,10 +105,7 @@ const HomePage: React.FC = () => {
             { name: 'Kiss FM', logo: 'https://kissfm.com.br/wp-content/uploads/2024/08/Madrugada_Kiss.png', url: 'https://kissfm.com.br' },
             { name: 'Band FM', logo: 'https://upload.wikimedia.org/wikipedia/pt/1/1f/Logotipo_da_BandNews_FM.png', url: 'https://bandfm.band.uol.com.br' },
             { name: 'Clube FM', logo: 'https://yt3.googleusercontent.com/gAgCvOpnliRNhl7zfEVESJTnHt6ucQjxJDG7R-OAE78R6wz1IGbTEiln6gp4HpBdVU1S8EIAduc=s900-c-k-c0x00ffffff-no-rj', url: 'https://clubefm.com.br' },
-            // MODIFICAÇÃO: Adicionar mais rádios aqui pode forçar o scroll horizontal, mostrando mais itens.
-            { name: 'Alpha FM', logo: 'https://i.scdn.co/image/ab67656300005f1f237938927018d9ef672f518b', url: 'https://alphafm.com.br' },
-            { name: 'Mix FM', logo: 'https://mixfm.com.br/wp-content/uploads/2020/07/mix_fm_logo.png', url: 'https://mixfm.com.br' },
-          ].map((station, idx) => (
+           ].map((station, idx) => (
             <a
               key={idx}
               href={station.url}
