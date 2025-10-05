@@ -1,367 +1,300 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Radio, Heart, Globe, Headphones, TrendingUp, Star, Music } from 'lucide-react';
-import StationList from '../components/StationList';
-import { useRadio } from '../contexts/RadioContext';
-import { fetchStations } from '../services/api';
-import { RadioStation } from '../types/station';
-import { Swiper, SwiperSlide } from 'swiper/react'
-import 'swiper/css'
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
-import { Navigation, Pagination, Autoplay } from 'swiper/modules'
+import {
+  Radio,
+  Heart,
+  Globe,
+  Headphones,
+  TrendingUp,
+  Star,
+  Music,
+  Home,
+  Search,
+  Users,
+} from 'lucide-react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 
-const HomePage: React.FC = () => {
-  const navigate = useNavigate();
-  const { stations, isLoading, error, recentlyPlayed } = useRadio();
-  const [popularStations, setPopularStations] = useState<RadioStation[]>([]);
-  const [featuredStations, setFeaturedStations] = useState<RadioStation[]>([]);
-  const [loadingPopular, setLoadingPopular] = useState(false);
-  const [brazilStations, setBrazilStations] = useState<RadioStation[]>([]);
-  const [loadingBrazil, setLoadingBrazil] = useState(false);
+// --------------------------------------------------
+// HomePage - estilo app móvel (claro) — arquivo único
+// - Pronto para usar com TailwindCSS
+// - Menu inferior fixo estilo mobile
+// - Cards arredondados, sombras suaves, toques animados
+// - Comentários mostram onde integrar sua API (fetchStations / useRadio)
+// --------------------------------------------------
 
-  useEffect(() => {
-    document.title = 'Rádio Jobs - Sua música, seu mundo';
+type RadioStation = {
+  id: string;
+  name: string;
+  country?: string;
+  logo?: string;
+  streamUrl?: string;
+};
 
-    const CACHE_TTL = 1000 * 60 * 10; // 10 minutos
+const MOCK_STATIONS: RadioStation[] = Array.from({ length: 12 }).map((_, i) => ({
+  id: String(i + 1),
+  name: `Rádio Exemplo ${i + 1}`,
+  country: 'Brazil',
+  logo: `https://picsum.photos/seed/radio${i + 1}/200/200`,
+  streamUrl: '#',
+}));
 
-    const getFromCache = (key: string) => {
-      const cached = localStorage.getItem(key);
-      if (!cached) return null;
-      const parsed = JSON.parse(cached);
-      const isValid = Date.now() - parsed.timestamp < CACHE_TTL;
-      return isValid ? parsed.data : null;
-    };
-
-    const saveToCache = (key: string, data: any) => {
-      localStorage.setItem(key, JSON.stringify({ data, timestamp: Date.now() }));
-    };
-
-    const loadStations = async () => {
-      setLoadingPopular(true);
-      try {
-        const cached = getFromCache('popularStations');
-        if (cached) {
-          setPopularStations(cached.slice(0, 12));
-          setFeaturedStations(cached.slice(12, 24));
-        } else {
-          const data = await fetchStations({}, 100);
-          const shuffled = [...data].sort(() => Math.random() - 0.5);
-          setPopularStations(shuffled.slice(0, 12));
-          setFeaturedStations(shuffled.slice(12, 24));
-          saveToCache('popularStations', shuffled);
-        }
-      } catch (err) {
-        console.error('Erro ao carregar estações:', err);
-      } finally {
-        setLoadingPopular(false);
-      }
-    };
-
-    const loadBrazilStations = async () => {
-      setLoadingBrazil(true);
-      try {
-        const cached = getFromCache('brazilStations');
-        if (cached) {
-          setBrazilStations(cached.slice(0, 12));
-        } else {
-          const data = await fetchStations({ country: 'Brazil' }, 50);
-          const shuffled = [...data].sort(() => Math.random() - 0.5);
-          setBrazilStations(shuffled.slice(0, 12));
-          saveToCache('brazilStations', shuffled);
-        }
-      } catch (err) {
-        console.error('Erro ao carregar rádios do Brasil:', err);
-      } finally {
-        setLoadingBrazil(false);
-      }
-    };
-
-    loadStations();
-    loadBrazilStations();
-  }, []);
-
+const StationCard: React.FC<{ station: RadioStation; onOpen?: (s: RadioStation) => void }> = ({ station, onOpen }) => {
   return (
-    <div className="space-y-20">
-      {/* Stories de Rádios Famosas */}
-      <section className="animate-slide-up">
-        <div className="flex gap-6 overflow-x-auto scrollbar-hide pb-4">
-          {[
-            { name: 'Jovem Pan', logo: 'https://upload.wikimedia.org/wikipedia/commons/a/a5/Jovem_Pan_FM_logo_2018_%282%29.png', url: 'https://jovempan.com.br' },
-            { name: 'CBN', logo: 'https://s3.glbimg.com/v1/AUTH_3ec28e89a5754c7b937cbc7ade6b1ace/assets/common/cbn-1024x1024.svg', url: 'https://cbn.globoradio.globo.com' },
-            { name: 'BandNews', logo: 'https://img.band.com.br/image/2025/03/28/lofo-ao-vivo-bandnews-91316_300x300.png', url: 'https://bandnewsfm.band.uol.com.br' },
-            { name: 'Antena 1', logo: 'https://img.radios.com.br/radio/xl/radio9505_1574106966.jpg', url: 'https://antena1.com.br' },
-            { name: 'Transamérica', logo: 'https://upload.wikimedia.org/wikipedia/commons/3/32/Rede_Transam%C3%A9rica_logo.png', url: 'https://transamerica.com.br' },
-            { name: 'Massa FM', logo: 'https://radioamantes.com/wp-content/uploads/2019/09/massa-fm.jpg', url: 'https://massafm.com.br' },
-            { name: 'Rádio Globo', logo: 'https://img.radios.com.br/radio/xl/radio72023_1702994214.jpeg', url: 'https://kiisfm.iheart.com/' },
-            { name: 'Rádio Globo', logo: 'https://thumbnail.anii.io/br/radio-globo-98-1-fm-rio-de-janeiro-brazil.webp', url: 'https://radioglobo.globo.com' },
-            { name: 'Rádio Globo', logo: 'https://static.mytuner.mobi/media/radios-150px/698/89-fm-a-radio-rock.a64f6d05.png', url: 'https://www.radiorock.com.br/' },
-            { name: 'Kiss FM', logo: 'https://kissfm.com.br/wp-content/uploads/2024/08/Madrugada_Kiss.png', url: 'https://kissfm.com.br' },
-            { name: 'Band FM', logo: 'https://upload.wikimedia.org/wikipedia/pt/1/1f/Logotipo_da_BandNews_FM.png', url: 'https://bandfm.band.uol.com.br' },
-            { name: 'Clube FM', logo: 'https://yt3.googleusercontent.com/gAgCvOpnliRNhl7zfEVESJTnHt6ucQjxJDG7R-OAE78R6wz1IGbTEiln6gp4HpBdVU1S8EIAduc=s900-c-k-c0x00ffffff-no-rj', url: 'https://clubefm.com.br' },
-          ].map((station, idx) => (
-            <a
-              key={idx}
-              href={station.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex flex-col items-center cursor-pointer hover:scale-110 transition-all duration-300 group min-w-[100px]"
-            >
-              <div className="relative">
-                <div className="w-20 h-20 rounded-full border-4 border-gradient-to-r from-yellow-400 to-orange-400 overflow-hidden shadow-xl group-hover:shadow-2xl transition-all duration-300">
-                  <img
-                    src={station.logo}
-                    alt={station.name}
-                    className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-300"
-                  />
-                </div>
-                <div className="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-r from-red-500 to-pink-500 rounded-full flex items-center justify-center">
-                  <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                </div>
-              </div>
-              <span className="text-sm font-semibold text-gray-700 mt-3 text-center max-w-[90px] truncate group-hover:text-blue-600 transition-colors duration-300">
-                {station.name}
-              </span>
-            </a>
-          ))}
-        </div>
-      </section>
-<section className="w-full mx-auto relative rounded-2xl overflow-hidden shadow-xl text-white 
-  aspect-[16/9] sm:aspect-[16/7] md:aspect-[16/6] lg:aspect-[16/5] max-h-[720px]">
-  <Swiper
-    modules={[Navigation, Pagination, Autoplay]}
-    navigation
-    pagination={{ clickable: true }}
-    autoplay={{ delay: 5000 }}
-    loop={true}
-    className="w-full h-full"
-  >
-    {[
-      {
-        href: "https://radiojobs.com.br",
-        img: "https://i0.wp.com/radio98fm.com/wp-content/uploads/2024/11/banner-site-98FM-1.png?fit=1920%2C560&ssl=1",
-        alt: "Rádio antiga",
-        title: "🎵 Sintonize Emoções",
-        text: "Cada estação é uma porta para novas descobertas. Explore músicas, histórias e culturas que atravessam o tempo e o país.",
-      },
-      {
-        href: "https://apple.com.br",
-        img: "https://thinkmarketingmagazine.com/wp-content/uploads/2013/06/steve-jobs.jpg",
-        alt: "Estúdio de rádio",
-        title: "📻 Site em Homenagem a Steve Jobs",
-        text: "A única maneira de fazer um trabalho excelente é amar o que você faz.",
-      },
-      {
-        href: "https://otimafm.com.br/",
-        img: "https://otimafm.com.br/uploads/banner/IBOPEBANNER_1695757570.jpg",
-        alt: "Música sertaneja",
-        title: "🤠 Sertanejo Raiz",
-        text: "O melhor do sertanejo brasileiro, das raízes aos sucessos atuais. Música que toca o coração.",
-      },
-     {
-        href: "https://www.radioliberdade.com.br/",
-        img: "https://radioliberdade.com.br/imagens/upload/destaquehome/1200x400-679137a3e2a9b-1737570211.jpg",
-        alt: "Música sertaneja",
-        title: "🤠 Sertanejo Raiz",
-        text: "O melhor do sertanejo brasileiro, das raízes aos sucessos atuais. Música que toca o coração.",
-      },
-      {
-        href: "https://www.radioliberdade.com.br/",
-        img: "https://radioliberdade.com.br/imagens/upload/destaquehome/1200x400-679107f1ee01e-1737558001.jpg",
-        alt: "Música sertaneja",
-        title: "🤠 Promoção Alexa",
-        text: "Quer ganhar um Alexa n liberdade FM.",
-      },
-      {
-        href: "https://radioliberdade.com.br/",
-        img: "https://radioliberdade.com.br/imagens/upload/destaquehome/1200x400-6749fa9bdbac2-1732901531.png",
-        alt: "Música e tecnologia",
-        title: "📻 Escute a Rádio Sertaneja do Brasil",
-        text: "Uma mistura de músicas sertanejas Brasileiras ",
-      },
-    ].map((slide, index) => (
-      <SwiperSlide key={index}>
-        <a
-          href={slide.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block relative w-full h-full group"
-        >
-          <img
-            src={slide.img}
-            alt={slide.alt}
-            className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
-          <div className="relative z-10 p-6 sm:p-10 flex flex-col justify-center h-full max-w-2xl">
-            <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white drop-shadow-2xl mb-4 group-hover:scale-105 transition-transform duration-300">
-              {slide.title}
-            </h2>
-            <p className="text-base sm:text-lg md:text-xl text-white/90 drop-shadow-lg leading-relaxed">
-              {slide.text}
-            </p>
-            <div className="mt-6">
-              <span className="inline-flex items-center px-5 py-3 bg-white/20 backdrop-blur-sm rounded-xl text-white font-semibold hover:bg-white/30 transition-all duration-300">
-                Explorar →
-              </span>
-            </div>
-          </div>
-        </a>
-      </SwiperSlide>
-    ))}
-  </Swiper>
-</section>
-
-
-
-
-
-
-
-      {/* Funcionalidades */}
-      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 animate-slide-up">
-        {[
-          { 
-            icon: <Radio size={40} className="text-blue-500" />, 
-            title: 'Milhares de Rádios', 
-            text: 'Acesso a mais de 50.000 estações do Brasil e do mundo inteiro.',
-            color: 'from-blue-500 to-cyan-500'
-          },
-          { 
-            icon: <Headphones size={40} className="text-purple-500" />, 
-            title: 'Busca Inteligente', 
-            text: 'Encontre rádios por nome, gênero, país ou idioma com nossa busca avançada.',
-            color: 'from-purple-500 to-pink-500'
-          },
-          { 
-            icon: <Heart size={40} className="text-red-500" />, 
-            title: 'Favoritas Salvas', 
-            text: 'Guarde suas rádios preferidas para ouvir sempre que quiser.',
-            color: 'from-red-500 to-orange-500'
-          },
-          { 
-            icon: <Globe size={40} className="text-green-500" />, 
-            title: 'Cobertura Global', 
-            text: 'Explore estações de todos os continentes e descubra novos sons.',
-            color: 'from-green-500 to-emerald-500'
-          },
-        ].map((item, i) => (
-          <div
-            key={i}
-            className="glass-card p-8 hover-lift group cursor-pointer"
-            style={{ animationDelay: `${i * 0.1}s` }}
-          >
-            <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-r ${item.color} mb-6 group-hover:scale-110 transition-transform duration-300`}>
-              {item.icon}
-            </div>
-            <h3 className="text-xl font-bold text-gray-800 mb-3 group-hover:text-blue-600 transition-colors duration-300">
-              {item.title}
-            </h3>
-            <p className="text-gray-600 leading-relaxed">{item.text}</p>
-          </div>
-        ))}
-      </section>
-
-      {/* Rádios do Brasil */}
-      <section className="animate-slide-up">
-        <div className="flex items-center justify-between mb-8">
-          <div className="glass-card p-6 flex-1 mr-4">
-            <h2 className="text-3xl font-bold flex items-center text-gray-800">
-              <div className="bg-gradient-to-r from-green-500 to-blue-500 p-3 rounded-2xl mr-4">
-                <Globe className="text-white" size={28} />
-              </div>
-              Rádios do Brasil
-            </h2>
-            <p className="text-gray-600 mt-2">As melhores estações brasileiras</p>
-          </div>
-          <button
-            onClick={() => navigate('/browse?country=Brazil')}
-            className="btn-secondary whitespace-nowrap"
-          >
-            Ver Todas
-          </button>
-        </div>
-        <StationList
-          stations={brazilStations}
-          isLoading={loadingBrazil}
-          emptyMessage="Nenhuma estação brasileira disponível no momento."
-        />
-      </section>
-
-      {/* Estações Populares */}
-      <section className="animate-slide-up">
-        <div className="flex items-center justify-between mb-8">
-          <div className="glass-card p-6 flex-1 mr-4">
-            <h2 className="text-3xl font-bold flex items-center text-gray-800">
-              <div className="bg-gradient-to-r from-yellow-500 to-orange-500 p-3 rounded-2xl mr-4">
-                <TrendingUp className="text-white" size={28} />
-              </div>
-              Mais Ouvidas
-            </h2>
-            <p className="text-gray-600 mt-2">As estações mais populares do momento</p>
-          </div>
-          <button
-            onClick={() => navigate('/browse')}
-            className="btn-primary whitespace-nowrap"
-          >
-            Explorar Todas
-          </button>
-        </div>
-        <StationList
-          stations={popularStations}
-          isLoading={loadingPopular}
-          emptyMessage="Carregando estações populares..."
-        />
-      </section>
-
-      {/* Estações em Destaque */}
-      <section className="animate-slide-up">
-        <div className="flex items-center justify-between mb-8">
-          <div className="glass-card p-6 flex-1 mr-4">
-            <h2 className="text-3xl font-bold flex items-center text-gray-800">
-              <div className="bg-gradient-to-r from-purple-500 to-pink-500 p-3 rounded-2xl mr-4">
-                <Star className="text-white" size={28} />
-              </div>
-              Em Destaque
-            </h2>
-            <p className="text-gray-600 mt-2">Seleção especial da nossa equipe</p>
-          </div>
-        </div>
-        <StationList
-          stations={featuredStations}
-          isLoading={loadingPopular}
-          emptyMessage="Nenhuma estação em destaque agora."
-        />
-      </section>
-
-      {/* Estações Recentes */}
-      {recentlyPlayed.length > 0 && (
-        <section className="animate-slide-up">
-          <div className="flex items-center justify-between mb-8">
-            <div className="glass-card p-6 flex-1 mr-4">
-              <h2 className="text-3xl font-bold flex items-center text-gray-800">
-                <div className="bg-gradient-to-r from-indigo-500 to-blue-500 p-3 rounded-2xl mr-4">
-                  <Music className="text-white" size={28} />
-                </div>
-                Ouvidas Recentemente
-              </h2>
-              <p className="text-gray-600 mt-2">Continue de onde parou</p>
-            </div>
-            <button
-              onClick={() => navigate('/history')}
-              className="btn-ghost text-gray-700 border-gray-300 hover:border-gray-400"
-            >
-              Ver Histórico
-            </button>
-          </div>
-          <StationList
-            stations={recentlyPlayed.slice(0, 9)}
-            emptyMessage="Nenhuma estação recente."
-          />
-        </section>
-      )}
+    <div
+      onClick={() => onOpen && onOpen(station)}
+      className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300 p-4 flex items-center gap-4 cursor-pointer"
+    >
+      <div className="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0">
+        <img src={station.logo} alt={station.name} className="w-full h-full object-cover" />
+      </div>
+      <div className="flex-1">
+        <div className="font-semibold text-gray-800 truncate">{station.name}</div>
+        <div className="text-xs text-gray-500 mt-1">{station.country ?? '—'}</div>
+      </div>
+      <div className="text-sm text-gray-400">▶</div>
     </div>
   );
 };
 
-export default HomePage;
+const StationList: React.FC<{
+  stations: RadioStation[];
+  title?: string;
+  subtitle?: string;
+  onOpen?: (s: RadioStation) => void;
+}> = ({ stations, title, subtitle, onOpen }) => {
+  return (
+    <div>
+      {title && (
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h3 className="text-lg font-bold text-gray-800">{title}</h3>
+            {subtitle && <p className="text-sm text-gray-500">{subtitle}</p>}
+          </div>
+        </div>
+      )}
+      <div className="grid grid-cols-2 gap-3">
+        {stations.map((s) => (
+          <StationCard key={s.id} station={s} onOpen={onOpen} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const BottomNav: React.FC<{ active?: string }> = ({ active = 'home' }) => {
+  const items = [
+    { id: 'home', label: 'Início', icon: <Home size={20} /> },
+    { id: 'search', label: 'Buscar', icon: <Search size={20} /> },
+    { id: 'favorites', label: 'Favoritos', icon: <Heart size={20} /> },
+    { id: 'my', label: 'Minhas', icon: <Users size={20} /> },
+  ];
+  return (
+    <nav className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[min(980px,96%)] bg-white/95 backdrop-blur-md rounded-3xl shadow-lg py-2 px-3 flex justify-between items-center z-50 border border-gray-100">
+      {items.map((it) => (
+        <button
+          key={it.id}
+          className={`flex flex-col items-center gap-1 text-xs focus:outline-none ${
+            active === it.id ? 'text-blue-600' : 'text-gray-500'
+          }`}
+        >
+          <div className={`p-2 rounded-lg ${active === it.id ? 'bg-blue-50' : ''}`}>{it.icon}</div>
+          <span>{it.label}</span>
+        </button>
+      ))}
+    </nav>
+  );
+};
+
+const TopGradientCard: React.FC<{ title: string; desc?: string; cta?: string }> = ({ title, desc, cta }) => (
+  <div className="relative rounded-2xl overflow-hidden shadow-md">
+    <div className="p-6 md:p-8 flex flex-col justify-center min-h-[160px] bg-gradient-to-r from-white to-white">
+      <div className="text-sm text-gray-500">{desc}</div>
+      <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 mt-2">{title}</h2>
+      {cta && (
+        <div className="mt-4">
+          <button className="inline-flex items-center px-4 py-2 rounded-xl bg-blue-600 text-white font-semibold shadow-sm">
+            {cta}
+          </button>
+        </div>
+      )}
+    </div>
+  </div>
+);
+
+const HomePageAppStyle: React.FC = () => {
+  const navigate = useNavigate();
+  const [popularStations, setPopularStations] = useState<RadioStation[]>([]);
+  const [brazilStations, setBrazilStations] = useState<RadioStation[]>([]);
+  const [featuredStations, setFeaturedStations] = useState<RadioStation[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    document.title = 'Rádio Jobs - App';
+    setIsLoading(true);
+    // === Integração com sua API ===
+    // Substitua este bloco pelo seu fetchStations / useRadio se preferir
+    // Exemplo: const data = await fetchStations({ country: 'Brazil' }, 50);
+    setTimeout(() => {
+      setPopularStations(MOCK_STATIONS.slice(0, 8));
+      setFeaturedStations(MOCK_STATIONS.slice(4, 12));
+      setBrazilStations(MOCK_STATIONS.slice(0, 6));
+      setIsLoading(false);
+    }, 400);
+  }, []);
+
+  const handleOpenStation = (s: RadioStation) => {
+    // navegue para player ou abra modal
+    // navigate(`/station/${s.id}`);
+    alert(`Abrindo: ${s.name}`);
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50 pb-36">
+      <div className="max-w-[980px] mx-auto px-4 pt-6">
+        {/* Header */}
+        <header className="flex items-center justify-between mb-6">
+          <div>
+            <h1 className="text-2xl font-extrabold text-gray-900">Rádio Jobs</h1>
+            <p className="text-sm text-gray-500">Sua música. Seu mundo.</p>
+          </div>
+          <div className="flex items-center gap-3">
+            <button className="p-2 rounded-lg bg-white shadow-sm">
+              <Radio size={18} />
+            </button>
+            <button className="p-2 rounded-lg bg-white shadow-sm">
+              <Heart size={18} />
+            </button>
+          </div>
+        </header>
+
+        {/* Stories - círculos horizontais */}
+        <section className="mb-6">
+          <div className="flex gap-4 overflow-x-auto pb-2">
+            {MOCK_STATIONS.slice(0, 10).map((s) => (
+              <div key={s.id} className="flex flex-col items-center min-w-[84px]">
+                <div className="w-20 h-20 rounded-2xl overflow-hidden shadow-sm border border-gray-100">
+                  <img src={s.logo} alt={s.name} className="w-full h-full object-cover" />
+                </div>
+                <div className="text-xs text-gray-700 mt-2 truncate w-20 text-center">{s.name}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Carousel */}
+        <section className="mb-6">
+          <div className="rounded-2xl overflow-hidden shadow-md">
+            <Swiper
+              modules={[Navigation, Pagination, Autoplay]}
+              navigation
+              pagination={{ clickable: true }}
+              autoplay={{ delay: 5000 }}
+              loop={true}
+              className="h-44 rounded-2xl"
+            >
+              {[1, 2, 3].map((i) => (
+                <SwiperSlide key={i}>
+                  <div className="relative w-full h-44">
+                    <img
+                      src={`https://picsum.photos/seed/slide${i}/1200/400`}
+                      alt={`slide-${i}`}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/30 to-transparent"></div>
+                    <div className="absolute left-4 bottom-4 text-white">
+                      <h3 className="text-lg font-bold">Sintonize Emoções</h3>
+                      <p className="text-sm">Descubra estações, playlists e mais.</p>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+        </section>
+
+        {/* Features Grid */}
+        <section className="grid grid-cols-2 gap-3 mb-6">
+          <div className="bg-white rounded-2xl p-4 shadow-sm flex items-center gap-3">
+            <div className="p-3 rounded-lg bg-blue-50">
+              <Headphones size={20} className="text-blue-600" />
+            </div>
+            <div>
+              <div className="text-sm font-semibold text-gray-800">Busca Inteligente</div>
+              <div className="text-xs text-gray-500">Encontre por nome, gênero ou país.</div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl p-4 shadow-sm flex items-center gap-3">
+            <div className="p-3 rounded-lg bg-green-50">
+              <Globe size={20} className="text-green-600" />
+            </div>
+            <div>
+              <div className="text-sm font-semibold text-gray-800">Cobertura Global</div>
+              <div className="text-xs text-gray-500">Estações do Brasil e do mundo.</div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl p-4 shadow-sm flex items-center gap-3">
+            <div className="p-3 rounded-lg bg-pink-50">
+              <Heart size={20} className="text-pink-600" />
+            </div>
+            <div>
+              <div className="text-sm font-semibold text-gray-800">Favoritas</div>
+              <div className="text-xs text-gray-500">Salve suas rádios preferidas.</div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl p-4 shadow-sm flex items-center gap-3">
+            <div className="p-3 rounded-lg bg-yellow-50">
+              <TrendingUp size={20} className="text-yellow-600" />
+            </div>
+            <div>
+              <div className="text-sm font-semibold text-gray-800">Mais Ouvidas</div>
+              <div className="text-xs text-gray-500">Rádios populares do momento.</div>
+            </div>
+          </div>
+        </section>
+
+        {/* Brazil Stations */}
+        <section className="mb-6">
+          <TopGradientCard title="Rádios do Brasil" desc="As melhores estações brasileiras" cta="Ver todas" />
+          <div className="mt-4">
+            <StationList stations={brazilStations} title={undefined} onOpen={handleOpenStation} />
+          </div>
+        </section>
+
+        {/* Popular */}
+        <section className="mb-6">
+          <StationList stations={popularStations} title="Mais Ouvidas" subtitle="As estações mais populares" onOpen={handleOpenStation} />
+        </section>
+
+        {/* Featured */}
+        <section className="mb-6">
+          <StationList stations={featuredStations} title="Em Destaque" subtitle="Seleção especial" onOpen={handleOpenStation} />
+        </section>
+
+        {/* Recentes - exemplo */}
+        <section className="mb-6">
+          <h3 className="text-lg font-bold text-gray-800 mb-3">Ouvidas Recentemente</h3>
+          <div className="grid grid-cols-3 gap-3">
+            {MOCK_STATIONS.slice(0, 3).map((s) => (
+              <div key={s.id} className="bg-white rounded-xl p-3 shadow-sm">
+                <img src={s.logo} alt={s.name} className="w-full h-20 object-cover rounded-lg mb-2" />
+                <div className="text-sm font-semibold text-gray-800 truncate">{s.name}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+
+      {/* Bottom Navigation */}
+      <BottomNav />
+    </div>
+  );
+};
+
+export default HomePageAppStyle;
