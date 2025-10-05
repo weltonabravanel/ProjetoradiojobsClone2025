@@ -136,7 +136,7 @@ const SearchPage: React.FC<SearchPageProps> = ({
     : sortedResults.slice(0, gridDisplayCount);
 
   const loadMore = useCallback(() => {
-    setGridDisplayCount(prev => Math.min(prev + 50, searchResults.length));
+    setGridDisplayCount(prev => Math.min(prev + 25, searchResults.length));
   }, [searchResults.length]);
 
   const totalResults = sortedResults.length;
