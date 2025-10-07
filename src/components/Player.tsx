@@ -18,6 +18,7 @@ const Player: React.FC = () => {
 
   // Lista expandida de comerciais em MP3
   const commercialUrls = [
+    'https://comerciais.netlify.app/mercadopago.mp3',
     'https://comerciais.netlify.app/claroprezao.mp3',
     'https://comerciais.netlify.app/mercadolivre19reais.mp3',
     'https://comerciais.netlify.app/caixa.mp3',
