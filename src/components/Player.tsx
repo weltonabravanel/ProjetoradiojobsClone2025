@@ -19,22 +19,7 @@ const Player: React.FC = () => {
   // Lista expandida de comerciais em MP3
   const commercialUrls = [
     'https://comerciais.netlify.app/dolly.mp3',
-    'https://comerciais.netlify.app/mercadopago.mp3',
-    'https://comerciais.netlify.app/claroprezao.mp3',
-    'https://comerciais.netlify.app/mercadolivre19reais.mp3',
-    'https://comerciais.netlify.app/caixa.mp3',
-    'https://comerciais.netlify.app/timblack.mp3',
-    'https://comerciais.netlify.app/mercadolivre.mp3',
-    'https://comerciais.netlify.app/vacina.mp3',
-    'https://comerciais.netlify.app/trivago.mp3',
-    'https://comerciais.netlify.app/pagbank.mp3',
-    'https://comerciais.netlify.app/bradesco.mp3',
-    'https://comerciais.netlify.app/claro.mp3',
-    'https://comerciais.netlify.app/sky.mp3',
-    'https://comerciais.netlify.app/itau.mp3',
-    'https://comerciais.netlify.app/google.mp3',
-    'https://comerciais.netlify.app/google2.mp3',
-    'https://comerciais.netlify.app/google3.mp3'
+    
   ];
 
   const audioRef = useRef<HTMLAudioElement>(null);
